@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Col, Divider, Row, Typography, Card } from "antd";
+import { Button, Col, Row, Typography } from "antd";
 import { DownloadOutlined } from "@ant-design/icons";
 
 const { Title, Text } = Typography;
