@@ -25,13 +25,13 @@ export default function Navbar() {
         <Menu.Item key="1">
           <img src={Logo} alt="logo" style={{ width: "100px" }} />
         </Menu.Item>
-        <Menu.Item key="1" icon={<PieChartOutlined />}>
+        <Menu.Item key="2" icon={<PieChartOutlined />}>
           <Link to="/checkin">Checkin</Link>
         </Menu.Item>
-        <Menu.Item key="2" icon={<DesktopOutlined />}>
+        <Menu.Item key="3" icon={<DesktopOutlined />}>
           <Link to="/queue">Queue</Link>
         </Menu.Item>
-        <Menu.Item key="3" icon={<DesktopOutlined />}>
+        <Menu.Item key="4" icon={<DesktopOutlined />}>
           <Link to="/create-ticket">Create Ticket</Link>
         </Menu.Item>
       </Menu>

@@ -16,7 +16,7 @@ export default function AppLayout({ children }) {
         <Content style={{ margin: "0 16px", padding: "50px" }}>
           <div
             className="site-layout-background"
-            style={{ padding: 24, height: "100%" }}
+            style={{ padding: 24, height: "100%", marginTop: "50px" }}
           >
             {children}
           </div>
