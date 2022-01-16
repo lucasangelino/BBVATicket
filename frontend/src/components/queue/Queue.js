@@ -75,7 +75,12 @@ export default function Queue() {
                 title={`Ticket No. ${item.ticketNo}`}
                 description={
                   <>
-                    <Text type="secondary">{`On Desk ${item.escritorio}`}</Text>
+                    <Text type="secondary">
+                      {`On Desk `}
+                      <Tag color="magenta">{item.escritorio}</Tag>
+                    </Text>
+                    {`- by: `}
+                    <Tag color="volcano">{item.agente}</Tag>
                   </>
                 }
               />

@@ -5,14 +5,17 @@ import { BrowserRouter } from "react-router-dom";
 //Components
 import Layout from "./components/layout/Layout";
 import App from "./components/app/App";
+import { UIProvider } from "./context/uiContext";
 
 export const TicketApp = () => {
   return (
     <>
       <BrowserRouter>
-        <Layout>
-          <App />
-        </Layout>
+        <UIProvider>
+          <Layout>
+            <App />
+          </Layout>
+        </UIProvider>
       </BrowserRouter>
     </>
   );

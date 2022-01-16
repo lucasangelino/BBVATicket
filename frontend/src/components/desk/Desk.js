@@ -1,18 +1,29 @@
 import React from "react";
+import { Navigate  } from "react-router-dom";
 import { Button, Col, Divider, Row, Typography, Card } from "antd";
 import { CloseCircleOutlined } from "@ant-design/icons";
+import { getUserStorage } from "../../helpers/getUserStorage";
 const { Title, Text } = Typography;
 
 export default function Desk() {
-  const closeDesk = () => {};
+  const [user] = React.useState(() => getUserStorage() )
+
+  const closeDesk = () => {
+    localStorage.clear()
+    return <Navigate to="/" />
+  };
+
+  if(!user.agente || !user.escritorio) {
+    return <Navigate to="/" replace={true} />
+  }
 
   return (
     <>
       <Row>
         <Col span={20}>
-          <Title level={2}>Lucas</Title>
+          <Title level={2}>{user.agente}</Title>
           <Text>On desk number </Text>
-          <Text type="succes">3</Text>
+          <Text type="succes">{user.escritorio}</Text>
         </Col>
         <Col span={4} align="right">
           <Button type="danger" shape="round" onClick={closeDesk}>

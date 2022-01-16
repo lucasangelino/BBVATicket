@@ -1,21 +1,28 @@
-import { useNavigate } from "react-router-dom";
+import * as React from "react";
+import { useNavigate, Navigate  } from "react-router-dom";
 import { SaveOutlined } from "@ant-design/icons";
 import { Form, Input, Button, InputNumber, Typography, Divider } from "antd";
+import { getUserStorage } from "../../helpers/getUserStorage";
 
 const { Title, Text } = Typography;
 
 export default function CheckIn() {
   const history = useNavigate();
+  const [user, _] = React.useState(() => getUserStorage() )
 
-  const onFinish = (values: any) => {
-    console.log("Success:", values);
+  const onFinish = (values) => {
+    localStorage.setItem("agent", values.agente);
+    localStorage.setItem("escritorio", values.desk);
     history("/desk");
   };
 
-  const onFinishFailed = (errorInfo: any) => {
+  const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
 
+  if (user.agente && user.escritorio) {
+    return <Navigate to="/desk" replace={true} />
+  }
   return (
     <>
       <Title level={3}>Check In</Title>

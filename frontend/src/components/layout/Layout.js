@@ -5,13 +5,16 @@ import { Layout } from "antd";
 
 // Components
 import Sidebar from "../sidebar/Sidebar";
+import { uiContext } from "../../context/uiContext";
 
 const { Content, Footer } = Layout;
 
 export default function AppLayout({ children }) {
+  const { isMenuHidden } = React.useContext(uiContext);
+
   return (
     <Layout style={{ minHeight: "100vh" }}>
-      <Sidebar />
+      {!isMenuHidden && <Sidebar />} 
       <Layout className="site-layout">
         <Content style={{ margin: "0 16px", padding: "50px" }}>
           <div

@@ -5,6 +5,8 @@ import { DownloadOutlined } from "@ant-design/icons";
 const { Title, Text } = Typography;
 
 export default function NewTicket() {
+
+
   const createTicket = () => {};
   return (
     <>
