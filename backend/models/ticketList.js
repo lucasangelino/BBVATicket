@@ -24,14 +24,8 @@ class TicketList {
   };
 
   assignTicket = (agent, desk) => {
-    if (ticket.agent) {
-      throw new Error("Ticket already assigned");
-    }
     if (!agent) {
       throw new Error("Agent not found");
-    }
-    if (!this.pending.includes(ticket)) {
-      throw new Error("Ticket not found");
     }
     if (this.pending.length === 0) return null;
 

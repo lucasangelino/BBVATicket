@@ -1,65 +1,38 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Row, Col, Typography, Divider, List, Card, Tag } from "antd";
-
+import { SocketContext } from "../../context/SocketContext";
 const { Title, Text } = Typography;
 
-const data = [
-  {
-    ticketNo: 33,
-    escritorio: 3,
-    agente: "Fernando Herrera",
-  },
-  {
-    ticketNo: 34,
-    escritorio: 4,
-    agente: "Melissa Flores",
-  },
-  {
-    ticketNo: 35,
-    escritorio: 5,
-    agente: "Carlos Castro",
-  },
-  {
-    ticketNo: 36,
-    escritorio: 3,
-    agente: "Fernando Herrera",
-  },
-  {
-    ticketNo: 37,
-    escritorio: 3,
-    agente: "Fernando Herrera",
-  },
-  {
-    ticketNo: 38,
-    escritorio: 2,
-    agente: "Melissa Flores",
-  },
-  {
-    ticketNo: 39,
-    escritorio: 5,
-    agente: "Carlos Castro",
-  },
-];
-
 export default function Queue() {
+  const [ticketList, setTicketList] = useState([]);
+  const { socket } = useContext(SocketContext);
+
+  useEffect(() => {
+    socket.on("ticket-assigned", (ticketList) => {
+      console.log("ticket-assigned", ticketList);
+      setTicketList(ticketList);
+    });
+    return () => socket.off("ticket-assigned");
+  }, [socket]);
+
   return (
     <>
       <Title level={1}>Current Number</Title>
       <Row>
         <Col span={12}>
           <List
-            dataSource={data.slice(0, 3)}
-            renderItem={(item) => {
+            dataSource={ticketList.slice(0, 3)}
+            renderItem={(ticket) => {
               return (
                 <List.Item>
                   <Card
                     style={{ width: 300, marginTop: 16 }}
                     actions={[
-                      <Tag color="volcano">{item.agente}</Tag>,
-                      <Tag color="magenta">Desk: {item.escritorio}</Tag>,
+                      <Tag color="volcano">{ticket.agent}</Tag>,
+                      <Tag color="magenta">Desk: {ticket.desk}</Tag>,
                     ]}
                   >
-                    <Title>Ticket {item.ticketNo}</Title>
+                    <Title>Ticket {ticket.number}</Title>
                   </Card>
                 </List.Item>
               );
@@ -69,18 +42,18 @@ export default function Queue() {
         <Col span={12}>
           <Divider>History</Divider>
           <List
-            dataSource={data.slice(3)}
-            renderItem={(item) => (
+            dataSource={ticketList.slice(3)}
+            renderItem={(ticket) => (
               <List.Item.Meta
-                title={`Ticket No. ${item.ticketNo}`}
+                title={`Ticket No. ${ticket.number}`}
                 description={
                   <>
                     <Text type="secondary">
                       {`On Desk `}
-                      <Tag color="magenta">{item.escritorio}</Tag>
+                      <Tag color="magenta">{ticket.desk}</Tag>
                     </Text>
                     {`- by: `}
-                    <Tag color="volcano">{item.agente}</Tag>
+                    <Tag color="volcano">{ticket.agent}</Tag>
                   </>
                 }
               />

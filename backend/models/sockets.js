@@ -12,11 +12,18 @@ class Sockets {
   socketEvents() {
     // On connection
     this.io.on("connection", (socket) => {
-      console.log("Nuevo cliente conectado");
       socket.on("get-ticket", (_, callback) => {
         const newTicket = this.ticketList.createTicket();
         callback(newTicket);
       });
+      socket.on(
+        "get-next-ticket",
+        ({ agente: agent, escritorio: desk }, callback) => {
+          const newTicket = this.ticketList.assignTicket(agent, desk);
+          callback(newTicket);
+          this.io.emit("ticket-assigned", this.ticketList.top13);
+        }
+      );
     });
   }
 }
