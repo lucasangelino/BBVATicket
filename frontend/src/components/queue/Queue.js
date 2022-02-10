@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Row, Col, Typography, Divider, List, Card, Tag } from "antd";
 import { SocketContext } from "../../context/SocketContext";
+import getLastTickets from "../../helpers/getLastTickets";
 const { Title, Text } = Typography;
 
 export default function Queue() {
@@ -9,11 +10,14 @@ export default function Queue() {
 
   useEffect(() => {
     socket.on("ticket-assigned", (ticketList) => {
-      console.log("ticket-assigned", ticketList);
       setTicketList(ticketList);
     });
     return () => socket.off("ticket-assigned");
   }, [socket]);
+
+  useEffect(() => {
+    getLastTickets().then(setTicketList);
+  }, []);
 
   return (
     <>
