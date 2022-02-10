@@ -1,31 +1,22 @@
-
-
 class Sockets {
+  constructor(io) {
+    this.io = io;
 
-    constructor( io ) {
+    this.socketEvents();
+  }
 
-        this.io = io;
+  socketEvents() {
+    // On connection
+    this.io.on("connection", (socket) => {
+      console.log("Nuevo cliente conectado");
+      // Escuchar evento: mensaje-to-server
+      socket.on("mensaje-to-server", (data) => {
+        console.log(data);
 
-        this.socketEvents();
-    }
-
-    socketEvents() {
-        // On connection
-        this.io.on('connection', ( socket ) => {
-
-            // Escuchar evento: mensaje-to-server
-            socket.on('mensaje-to-server', ( data ) => {
-                console.log( data );
-                
-                this.io.emit('mensaje-from-server', data );
-            });
-            
-        
-        });
-    }
-
-
+        this.io.emit("mensaje-from-server", data);
+      });
+    });
+  }
 }
-
 
 module.exports = Sockets;
