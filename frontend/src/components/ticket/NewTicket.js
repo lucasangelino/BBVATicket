@@ -1,13 +1,18 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { Button, Col, Row, Typography } from "antd";
 import { DownloadOutlined } from "@ant-design/icons";
-
+import { SocketContext } from "../../context/SocketContext";
 const { Title, Text } = Typography;
 
 export default function NewTicket() {
+  const [ticket, setTicket] = useState(null);
+  const { socket } = useContext(SocketContext);
 
-
-  const createTicket = () => {};
+  const createTicket = () => {
+    socket.emit("get-ticket", null, (ticket) => {
+      setTicket(ticket);
+    });
+  };
   return (
     <>
       <Row>
@@ -26,13 +31,15 @@ export default function NewTicket() {
       </Row>
 
       <Row style={{ marginTop: 100 }}>
-        <Col span={14} offset={6} align="center">
-          <Text level={1}>Your Ticket Number</Text>
-          <br />
-          <Text level={2} type="success" style={{ fontSize: 65 }}>
-            55
-          </Text>
-        </Col>
+        {ticket && (
+          <Col span={14} offset={6} align="center">
+            <Text level={2}>Your Ticket Number</Text>
+            <br />
+            <Text level={2} type="success" style={{ fontSize: 65 }}>
+              {ticket.number}
+            </Text>
+          </Col>
+        )}
       </Row>
     </>
   );

@@ -39,8 +39,9 @@ class TicketList {
     nextTicket.agent = agent;
     nextTicket.desk = desk;
     this.assinged.unshift(nextTicket);
+
     return nextTicket;
   };
 }
 
-module.export = TicketList;
+module.exports = TicketList;
